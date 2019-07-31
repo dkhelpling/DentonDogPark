@@ -10,28 +10,43 @@
         <h1>Denton Dog park</h1>
         <p>Welcome to the initial build of Denton Dog Park. This is a project web app powered by Vue.js and Firebase.</p>
       </div>
+      <hr />
       <div class="col2" :class="{'signup-form': !showLoginForm && !showForgotPassword}">
-        <form v-if="showLoginForm" @submit.prevent>
-          <h1>Welcome Back</h1>
+        <div class="col-md-6 offset-sm-3 login-form-1">
+          <form v-if="showLoginForm" @submit.prevent>
+            <h1>Welcome Back</h1>
+            <div class="form-group">
+              <label for="email1"></label>
+              <input
+                v-model.trim="loginForm.email"
+                type="text"
+                placeholder="Your E-mail *"
+                id="email1"
+                class="form-control"
+              />
+            </div>
 
-          <label for="email1">Email</label>
-          <input v-model.trim="loginForm.email" type="text" placeholder="you@email.com" id="email1" />
+            <div class="form-group">
+              <label for="password1"></label>
+              <input
+                v-model.trim="loginForm.password"
+                type="password"
+                placeholder="Your Password *"
+                id="password1"
+                class="form-control"
+              />
+            </div>
 
-          <label for="password1">Password</label>
-          <input
-            v-model.trim="loginForm.password"
-            type="password"
-            placeholder="******"
-            id="password1"
-          />
+            <div class="form-group">
+              <button @click="login" class="btnSubmit">Log In</button>
+            </div>
 
-          <button @click="login" class="button">Log In</button>
-
-          <div class="extras">
-            <a @click="togglePasswordReset">Forgot Password</a>
-            <a @click="toggleForm">Create an Account</a>
-          </div>
-        </form>
+            <div class="extras">
+              <a @click="togglePasswordReset">Forgot Password |</a>
+              <a @click="toggleForm">Create an Account</a>
+            </div>
+          </form>
+        </div>
         <form v-if="!showLoginForm && !showForgotPassword" @submit.prevent>
           <h1>Get Started</h1>
 
@@ -211,3 +226,56 @@ export default {
   }
 };
 </script>
+<style>
+.login-container {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.login-form-1 {
+  padding: 5%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-1 h3 {
+  text-align: center;
+  color: #333;
+}
+.login-form-2 {
+  padding: 5%;
+  background: #0062cc;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3 {
+  text-align: center;
+  color: #fff;
+}
+.login-container form {
+  padding: 10%;
+}
+.btnSubmit {
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+}
+.login-form-1 .btnSubmit {
+  font-weight: 600;
+  color: #fff;
+  background-color: #0062cc;
+}
+.login-form-2 .btnSubmit {
+  font-weight: 600;
+  color: #0062cc;
+  background-color: #fff;
+}
+.login-form-2 .ForgetPwd {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.login-form-1 .ForgetPwd {
+  color: #0062cc;
+  font-weight: 600;
+  text-decoration: none;
+}
+</style>
