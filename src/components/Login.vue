@@ -6,15 +6,10 @@
       </div>
     </transition>
     <section>
-      <div class="col1">
-        <h1>Denton Dog park</h1>
-        <p>Welcome to the initial build of Denton Dog Park. This is a project web app powered by Vue.js and Firebase.</p>
-      </div>
-      <hr />
       <div class="col2" :class="{'signup-form': !showLoginForm && !showForgotPassword}">
         <div class="col-md-6 offset-sm-3 login-form-1">
           <form v-if="showLoginForm" @submit.prevent>
-            <h1>Welcome Back</h1>
+            <h1>Welcome</h1>
             <div class="form-group">
               <label for="email1"></label>
               <input
@@ -42,7 +37,8 @@
             </div>
 
             <div class="extras">
-              <a @click="togglePasswordReset">Forgot Password |</a>
+              <a @click="togglePasswordReset">Forgot Password</a>
+              <br />
               <a @click="toggleForm">Create an Account</a>
             </div>
           </form>
@@ -233,7 +229,6 @@ export default {
 }
 .login-form-1 {
   padding: 5%;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 .login-form-1 h3 {
   text-align: center;
@@ -242,7 +237,6 @@ export default {
 .login-form-2 {
   padding: 5%;
   background: #0062cc;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 .login-form-2 h3 {
   text-align: center;

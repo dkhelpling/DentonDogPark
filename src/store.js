@@ -1,11 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
+const fb = require("./firebaseConfig.js");
 
 Vue.use(Vuex);
 
-const fb = require("./firebaseConfig.js");
+//handles page reloads
+fb.auth.onAuthStateChanged(user => {
+  if (user) {
+    store.commit("setCurrentUser", user);
+    store.dispatch("fetchUserProfile");
+  }
+});
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   //Added properties to the state file
   state: {
     currentUser: null,
