@@ -27,7 +27,7 @@ import { mapState } from "vuex";
 
 export default {
   data() {
-    return {};
+    return { name: "", title: "", showSuccess: false, attendence: false };
   },
   computed: {
     ...mapState(["userProfile"])

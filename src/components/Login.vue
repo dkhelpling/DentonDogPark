@@ -124,7 +124,8 @@ export default {
         name: "",
         title: "",
         email: "",
-        password: ""
+        password: "",
+        attendence: false
       },
       passwordForm: {
         email: ""
@@ -203,7 +204,8 @@ export default {
             .doc(credential.user.uid)
             .set({
               name: this.signupForm.name,
-              title: this.signupForm.title
+              title: this.signupForm.title,
+              attendence: this.signupForm.attendence
             })
             .then(() => {
               this.$store.dispatch("fetchUserProfile");

@@ -9,6 +9,9 @@ fb.auth.onAuthStateChanged(user => {
   if (user) {
     store.commit("setCurrentUser", user);
     store.dispatch("fetchUserProfile");
+    fb.usersCollection.doc(user.uid).onSnapshot(doc => {
+      store.commit("setUserProfile", doc.data());
+    });
   }
 });
 
@@ -42,6 +45,30 @@ export const store = new Vuex.Store({
         })
         .catch(err => {
           console.log(err);
+        });
+    },
+    updateProfile({ commit, state }, data) {
+      let attendence = data.attendence;
+      fb.usersCollection
+        .doc(state.currentUser.uid)
+        .update({ attendence })
+        .then(function() {
+          //successful
+        })
+        .catch(function(error) {
+          console.log(error.message);
+        });
+    },
+    updateProfile2({ commit, state }, data) {
+      let attendence = data.attendence;
+      fb.usersCollection
+        .doc(state.currentUser.uid)
+        .update({ attendence })
+        .then(function() {
+          //successful
+        })
+        .catch(function(error) {
+          console.log(error.message);
         });
     }
   }
