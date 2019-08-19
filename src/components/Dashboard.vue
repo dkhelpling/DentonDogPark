@@ -3,9 +3,9 @@
     <section>
       <div class="col1">
         <div class="profile">
-          <h5>{{ userProfile.name }}</h5>
-          <p>{{ userProfile.title }}</p>
-          <p>{{ userProfile.attendence }}</p>
+          <h5>name: {{ userProfile.name }}</h5>
+          <p>pet: {{ userProfile.pet }}</p>
+          <p>At dogpark: {{ userProfile.attendence }}</p>
           <Checkin></Checkin>
         </div>
       </div>

@@ -44,31 +44,44 @@
           </form>
         </div>
         <form v-if="!showLoginForm && !showForgotPassword" @submit.prevent>
-          <h1>Get Started</h1>
+          <div>
+            <div class="container">
+              <div class="col-md-6">
+                <div id="logbox">
+                  <h1>Create an Account</h1>
 
-          <label for="name">Name</label>
-          <input v-model.trim="signupForm.name" type="text" placeholder="Savvy Apps" id="name" />
+                  <input
+                    v-model.trim="signupForm.pet"
+                    type="text"
+                    placeholder="Pet Name"
+                    class="input pass"
+                  />
+                  <input
+                    v-model.trim="signupForm.name"
+                    type="text"
+                    placeholder="First Name"
+                    class="input pass"
+                  />
+                  <input
+                    v-model.trim="signupForm.email"
+                    type="text"
+                    placeholder="Email address"
+                    class="input pass"
+                  />
+                  <input
+                    v-model.trim="signupForm.password"
+                    type="password"
+                    placeholder="Choose a password"
+                    class="input pass"
+                  />
 
-          <label for="title">Title</label>
-          <input v-model.trim="signupForm.title" type="text" placeholder="Company" id="title" />
-
-          <label for="email2">Email</label>
-          <input
-            v-model.trim="signupForm.email"
-            type="text"
-            placeholder="you@email.com"
-            id="email2"
-          />
-
-          <label for="password2">Password</label>
-          <input
-            v-model.trim="signupForm.password"
-            type="password"
-            placeholder="min 6 characters"
-            id="password2"
-          />
-
-          <button @click="signup" class="button">Sign Up</button>
+                  <input type="submit" value="Sign me up!" class="inputButton" @click="signup" />
+                  <button @click="signup" class="button">Sign Up</button>
+                </div>
+              </div>
+              <!--col-md-6-->
+            </div>
+          </div>
 
           <div class="extras">
             <a @click="toggleForm">Back to Log In</a>
@@ -121,9 +134,9 @@ export default {
         password: ""
       },
       signupForm: {
-        name: "",
-        title: "",
         email: "",
+        pet: "",
+        name: "",
         password: "",
         attendence: false
       },
@@ -204,7 +217,7 @@ export default {
             .doc(credential.user.uid)
             .set({
               name: this.signupForm.name,
-              title: this.signupForm.title,
+              pet: this.signupForm.pet,
               attendence: this.signupForm.attendence
             })
             .then(() => {
@@ -273,5 +286,92 @@ export default {
   color: #0062cc;
   font-weight: 600;
   text-decoration: none;
+}
+
+::selection {
+  background-color: #b5e2e7;
+}
+
+::-moz-selection {
+  background-color: #8ac7d8;
+}
+
+.container {
+  display: -webkit-flex;
+  display: flex;
+  height: 100%;
+}
+
+#logbox {
+  padding: 10px;
+  margin: 50px auto;
+  width: 340px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+  text-align: center;
+  font-size: 175%;
+  color: #757575;
+  font-weight: 300;
+}
+
+h1,
+input {
+  font-family: "Open Sans", Helvetica, sans-serif;
+}
+
+.input {
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 0 auto 15px;
+  padding: 0 15px;
+  border: none;
+  border-bottom: 2px solid #ebebeb;
+}
+.input:focus {
+  outline: none;
+  border-bottom-color: #3cc !important;
+}
+.input:hover {
+  border-bottom-color: #dcdcdc;
+}
+.input:invalid {
+  box-shadow: none;
+}
+
+.pass:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+.inputButton {
+  position: relative;
+  width: 85%;
+  height: 50px;
+  display: block;
+  margin: 30px auto 30px;
+  color: white;
+  background-color: #3cc;
+  border: none;
+  -webkit-box-shadow: 0 5px 0 #2cadad;
+  -moz-box-shadow: 0 5px 0 #2cadad;
+  box-shadow: 0 5px 0 #2cadad;
+}
+.inputButton:hover {
+  top: 2px;
+  -webkit-box-shadow: 0 3px 0 #2cadad;
+  -moz-box-shadow: 0 3px 0 #2cadad;
+  box-shadow: 0 3px 0 #2cadad;
+}
+.inputButton:active {
+  top: 5px;
+  box-shadow: none;
+}
+.inputButton:focus {
+  outline: none;
 }
 </style>
