@@ -12,6 +12,17 @@ fb.auth.onAuthStateChanged(user => {
     fb.usersCollection.doc(user.uid).onSnapshot(doc => {
       store.commit("setUserProfile", doc.data());
     });
+
+    fb.usersCollection.orderBy("pet").onSnapshot(querySnapshot => {
+      let petArray = [];
+      querySnapshot.forEach(doc => {
+        let pet = doc.data();
+        if (pet.attendence === true) {
+          petArray.push(pet.pet);
+        }
+      });
+      store.commit("setPets", petArray);
+    });
   }
 });
 
@@ -19,7 +30,8 @@ export const store = new Vuex.Store({
   //Added properties to the state file
   state: {
     currentUser: null,
-    userProfile: {}
+    userProfile: {},
+    pets: []
   },
   //Created mutations to update user in state object
   mutations: {
@@ -28,6 +40,9 @@ export const store = new Vuex.Store({
     },
     setUserProfile(state, val) {
       state.userProfile = val;
+    },
+    setPets(state, val) {
+      state.pets = val;
     }
   },
   //Setup actions to fetch the user profile

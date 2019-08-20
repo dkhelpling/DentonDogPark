@@ -6,6 +6,10 @@
           <h5>name: {{ userProfile.name }}</h5>
           <p>pet: {{ userProfile.pet }}</p>
           <p>At dogpark: {{ userProfile.attendence }}</p>
+          <p>Pet List:</p>
+          <p v-if="pets.length">{{pets}}</p>
+          <p v-else>No dogs in park</p>
+
           <Checkin></Checkin>
         </div>
       </div>
@@ -25,10 +29,7 @@ export default {
   },
   components: { Checkin },
   computed: {
-    ...mapState(["userProfile"])
+    ...mapState(["userProfile", "pets"])
   }
 };
 </script>
-
-<style>
-</style>

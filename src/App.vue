@@ -12,7 +12,7 @@ import Navigation from "./components/Navigation.vue";
 export default {
   components: { Navigation },
   computed: {
-    ...mapState(["currentUser"])
+    ...mapState(["currentUser","pets"])
   }
 };
 </script>
