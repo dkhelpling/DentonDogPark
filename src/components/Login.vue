@@ -159,6 +159,8 @@
                   <div class="flex-grow-2"></div>
                   <v-btn color="red darken-2" class="white--text" @click="toggleForm">Sign up</v-btn>
                   <div class="flex-grow-1"></div>
+                  <v-btn color="indigo" dark @click="togglePasswordReset">Forgot Password?</v-btn>
+                  <div class="flex-grow-1"></div>
                   <v-btn color="indigo" dark @click="login">Login</v-btn>
                 </v-card-actions>
                 <v-card-actions></v-card-actions>
@@ -212,19 +214,67 @@
                 <v-card-actions>
                   <div class="flex-grow-2"></div>
                   <v-btn color="red darken-2" class="white--text" @click="signup">Sign up</v-btn>
+
                   <div class="flex-grow-1"></div>
                   <v-btn color="indigo" dark @click="toggleForm">Back to Login</v-btn>
                 </v-card-actions>
-                <v-card-actions></v-card-actions>
               </v-card>
             </v-col>
           </v-row>
         </v-container>
       </form>
+      <form v-if="showForgotPassword" @submit.prevent class="password-reset">
+        <div v-if="!passwordResetSuccess">
+          <v-container class="fill-height" fluid>
+            <v-row align="center" justify="center">
+              <v-col cols="12" sm="8" md="4">
+                <v-card class="elevation-12">
+                  <v-toolbar color="indigo" dark>
+                    <v-toolbar-title>Reset Password</v-toolbar-title>
+                    <div class="flex-grow-1"></div>
+                  </v-toolbar>
+                  <v-card-text>
+                    <v-form>
+                      <v-text-field
+                        label="E-mail"
+                        name="E-mail"
+                        type="text"
+                        v-model.trim="passwordForm.email"
+                        required
+                        @keypress.enter="resetPassword"
+                      ></v-text-field>
+                    </v-form>
+                  </v-card-text>
+                  <v-card-actions>
+                    <div class="flex-grow-2"></div>
+                    <v-btn color="indigo" dark @click="resetPassword">Submit</v-btn>
+                    <div class="flex-grow-1"></div>
+                    <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
+        <!--<div v-else>
+          <v-toolbar color="indigo" dark>
+            <v-toolbar-title>Create an Account</v-toolbar-title>
+            <div class="flex-grow-1"></div>
+          </v-toolbar>
+          <h1>Email Sent</h1>
+          <p>check your email for a link to reset your password</p>
+          <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>
+        </div>-->
+        <div v-else>
+          <div class="flex-grow-1"></div>
+          <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>
+          <v-alert type="success">Check your email for a link to reset your password</v-alert>
+        </div>
+      </form>
+    </div>
 
-      <div v-if="errorMsg !== ''" class="error-msg">
-        <v-alert type="error">{{ errorMsg }}</v-alert>
-      </div>
+    <div v-if="errorMsg !== ''" class="error-msg">
+      <v-alert type="error">{{ errorMsg }}</v-alert>
     </div>
   </section>
 </template>
@@ -270,6 +320,7 @@ export default {
         this.showLoginForm = true;
         this.showForgotPassword = false;
         this.passwordResetSuccess = false;
+        this.errorMsg = "";
       } else {
         this.showLoginForm = false;
         this.showForgotPassword = true;
@@ -277,25 +328,19 @@ export default {
     },
 
     resetPassword() {
-      this.performingRequest = true;
-
       fb.auth
         .sendPasswordResetEmail(this.passwordForm.email)
         .then(() => {
-          this.performingRequest = false;
           this.passwordResetSuccess = true;
           this.passwordForm.email = "";
         })
         .catch(err => {
           console.log(err);
 
-          this.performingRequest = false;
           this.errorMsg = err.message;
         });
     },
     login() {
-      this.performingRequest = true;
-
       fb.auth
         .signInWithEmailAndPassword(
           this.loginForm.email,

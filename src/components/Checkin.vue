@@ -1,7 +1,11 @@
 <template>
   <div class="col1">
-    <button @click="updateProfile" class="button">Checkin</button>
-    <button @click="updateProfile2" class="button">Checkout</button>
+    <div class="flex-grow-1" v-if="atPark === false">
+      <v-btn color="indigo" dark @click="updateProfile">Checkin</v-btn>
+    </div>
+    <div v-else>
+      <v-btn color="indigo" dark @click="updateProfile2">Checkout</v-btn>
+    </div>
   </div>
 </template>
 
@@ -12,7 +16,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      attendence: ""
+      attendence: "",
+      atPark: false
     };
   },
   computed: {
@@ -23,12 +28,14 @@ export default {
       this.$store.dispatch("updateProfile", {
         attendence: this.attendence !== true ? true : false
       });
+      this.atPark = true;
       setTimeout(() => {}, 2000);
     },
     updateProfile2() {
       this.$store.dispatch("updateProfile2", {
         attendence: this.attendence !== false ? false : true
       });
+      this.atPark = false;
       setTimeout(() => {}, 2000);
     }
   }
