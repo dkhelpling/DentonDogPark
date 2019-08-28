@@ -1,20 +1,16 @@
 <template>
-  <div id="dashboard">
-    <section>
-      <div class="col1">
-        <div class="profile">
-          <h5>name: {{ userProfile.name }}</h5>
-          <p>pet: {{ userProfile.pet }}</p>
-          <p>At dogpark: {{ userProfile.attendence }}</p>
-          <p>Pet List:</p>
-          <p v-if="pets.length">{{pets}}</p>
-          <p v-else>No dogs in park</p>
+  <v-row align="center" justify="center">
+    <div id="dashboard">
+      <h5>name: {{ userProfile.name }}</h5>
+      <p>pet: {{ userProfile.pet }}</p>
+      <p>At dogpark: {{ userProfile.attendence }}</p>
+      <p>Pet List:</p>
+      <p v-if="pets.length">{{pets}}</p>
+      <p v-else>No dogs in park</p>
 
-          <Checkin></Checkin>
-        </div>
-      </div>
-    </section>
-  </div>
+      <Checkin></Checkin>
+    </div>
+  </v-row>
 </template>
 
 

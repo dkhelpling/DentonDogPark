@@ -1,9 +1,24 @@
 <template>
-  <div id="app">
-    <Navigation v-if="currentUser"></Navigation>
-    <router-view />
-  </div>
+  <v-app>
+    <!-- Create Navigation while logged in and while logged out-->
+    <v-app-bar app v-if="currentUser">
+      <Navigation></Navigation>
+    </v-app-bar>
+    <v-app-bar app v-else color="indigo" dark>
+      <v-toolbar-title>Denton Dog Park</v-toolbar-title>
+    </v-app-bar>
+    <v-content>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+    <v-footer color="indigo" app>
+      <span class="white--text">&copy; 2019</span>
+    </v-footer>
+  </v-app>
 </template>
+
+
 
 <script>
 import { mapState } from "vuex";
@@ -12,29 +27,10 @@ import Navigation from "./components/Navigation.vue";
 export default {
   components: { Navigation },
   computed: {
-    ...mapState(["currentUser","pets"])
+    ...mapState(["currentUser", "pets"])
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

@@ -1,4 +1,4 @@
-# vue-app
+# denton-dog-park
 
 ## Project setup
 ```

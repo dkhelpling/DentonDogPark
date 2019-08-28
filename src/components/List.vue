@@ -52,9 +52,9 @@ export default {
         })
         }
       });
-    });
-  }
-};
+    }
+  };
+
 </script>
 
 <style>

@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div id="login">
     <transition name="fade">
       <div v-if="performingRequest" class="loading">
@@ -79,7 +79,7 @@
                   <button @click="signup" class="button">Sign Up</button>
                 </div>
               </div>
-              <!--col-md-6-->
+              
             </div>
           </div>
 
@@ -121,7 +121,113 @@
     </section>
   </div>
 </template>
+-->
+<template>
+  <section>
+    <div :class="{'signup-form': !showLoginForm && !showForgotPassword}">
+      <form v-if="showLoginForm" @submit.prevent>
+        <v-container class="fill-height" fluid>
+          <v-row align="center" justify="center">
+            <v-col cols="12" sm="8" md="4">
+              <v-card class="elevation-12">
+                <v-toolbar color="indigo" dark>
+                  <v-toolbar-title>Login</v-toolbar-title>
+                  <div class="flex-grow-1"></div>
+                </v-toolbar>
+                <v-card-text>
+                  <v-form>
+                    <v-text-field
+                      label="E-mail"
+                      name="login"
+                      prepend-icon="mdi-account"
+                      type="text"
+                      v-model.trim="loginForm.email"
+                    ></v-text-field>
 
+                    <v-text-field
+                      id="password"
+                      label="Password"
+                      name="password"
+                      prepend-icon="mdi-key"
+                      type="password"
+                      v-model.trim="loginForm.password"
+                      @keypress.enter="login"
+                    ></v-text-field>
+                  </v-form>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-2"></div>
+                  <v-btn color="red darken-2" class="white--text" @click="toggleForm">Sign up</v-btn>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="indigo" dark @click="login">Login</v-btn>
+                </v-card-actions>
+                <v-card-actions></v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </form>
+    </div>
+    <div>
+      <form v-if="!showLoginForm && !showForgotPassword" @submit.prevent>
+        <v-container class="fill-height" fluid>
+          <v-row align="center" justify="center">
+            <v-col cols="12" sm="8" md="4">
+              <v-card class="elevation-12">
+                <v-toolbar color="indigo" dark>
+                  <v-toolbar-title>Create an Account</v-toolbar-title>
+                  <div class="flex-grow-1"></div>
+                </v-toolbar>
+                <v-card-text>
+                  <v-form>
+                    <v-text-field
+                      label="Pet Name"
+                      name="Pet Name"
+                      type="text"
+                      v-model.trim="signupForm.pet"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      label="First Name"
+                      name="First Name"
+                      type="text"
+                      v-model.trim="signupForm.name"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      label="E-mail Address"
+                      name="E-mail Address"
+                      type="text"
+                      v-model.trim="signupForm.email"
+                    ></v-text-field>
+                    <v-text-field
+                      label="Choose a Password"
+                      name="Choose a Password"
+                      type="password"
+                      v-model.trim="signupForm.password"
+                      @keypress.enter="signup"
+                    ></v-text-field>
+                  </v-form>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-2"></div>
+                  <v-btn color="red darken-2" class="white--text" @click="signup">Sign up</v-btn>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="indigo" dark @click="toggleForm">Back to Login</v-btn>
+                </v-card-actions>
+                <v-card-actions></v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </form>
+
+      <div v-if="errorMsg !== ''" class="error-msg">
+        <v-alert type="error">{{ errorMsg }}</v-alert>
+      </div>
+    </div>
+  </section>
+</template>
 <script>
 const fb = require("../firebaseConfig.js");
 //login logic for firebase
@@ -147,11 +253,16 @@ export default {
       showForgotPassword: false,
       passwordResetSuccess: false,
       performingRequest: false,
-      errorMsg: ""
+      errorMsg: "",
+      drawer: null
     };
+  },
+  props: {
+    source: String
   },
   methods: {
     toggleForm() {
+      this.errorMsg = "";
       this.showLoginForm = !this.showLoginForm;
     },
     togglePasswordReset() {
@@ -177,6 +288,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
+
           this.performingRequest = false;
           this.errorMsg = err.message;
         });
@@ -197,6 +309,7 @@ export default {
         })
         .catch(err => {
           console.log(err);
+          console.log("test");
           this.performingRequest = false;
           this.errorMsg = err.message;
         });
@@ -228,150 +341,16 @@ export default {
             .catch(err => {
               console.log(err);
               this.performingRequest = false;
+              this.errorMsg = err.message;
             });
         })
         .catch(err => {
           console.log(err);
+          this.errorMsg = err.message;
         });
     }
   }
 };
 </script>
 <style>
-.login-container {
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-.login-form-1 {
-  padding: 5%;
-}
-.login-form-1 h3 {
-  text-align: center;
-  color: #333;
-}
-.login-form-2 {
-  padding: 5%;
-  background: #0062cc;
-}
-.login-form-2 h3 {
-  text-align: center;
-  color: #fff;
-}
-.login-container form {
-  padding: 10%;
-}
-.btnSubmit {
-  width: 50%;
-  border-radius: 1rem;
-  padding: 1.5%;
-  border: none;
-  cursor: pointer;
-}
-.login-form-1 .btnSubmit {
-  font-weight: 600;
-  color: #fff;
-  background-color: #0062cc;
-}
-.login-form-2 .btnSubmit {
-  font-weight: 600;
-  color: #0062cc;
-  background-color: #fff;
-}
-.login-form-2 .ForgetPwd {
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
-}
-.login-form-1 .ForgetPwd {
-  color: #0062cc;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-::selection {
-  background-color: #b5e2e7;
-}
-
-::-moz-selection {
-  background-color: #8ac7d8;
-}
-
-.container {
-  display: -webkit-flex;
-  display: flex;
-  height: 100%;
-}
-
-#logbox {
-  padding: 10px;
-  margin: 50px auto;
-  width: 340px;
-  background-color: #fff;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-}
-
-h1 {
-  text-align: center;
-  font-size: 175%;
-  color: #757575;
-  font-weight: 300;
-}
-
-h1,
-input {
-  font-family: "Open Sans", Helvetica, sans-serif;
-}
-
-.input {
-  width: 75%;
-  height: 50px;
-  display: block;
-  margin: 0 auto 15px;
-  padding: 0 15px;
-  border: none;
-  border-bottom: 2px solid #ebebeb;
-}
-.input:focus {
-  outline: none;
-  border-bottom-color: #3cc !important;
-}
-.input:hover {
-  border-bottom-color: #dcdcdc;
-}
-.input:invalid {
-  box-shadow: none;
-}
-
-.pass:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset;
-}
-
-.inputButton {
-  position: relative;
-  width: 85%;
-  height: 50px;
-  display: block;
-  margin: 30px auto 30px;
-  color: white;
-  background-color: #3cc;
-  border: none;
-  -webkit-box-shadow: 0 5px 0 #2cadad;
-  -moz-box-shadow: 0 5px 0 #2cadad;
-  box-shadow: 0 5px 0 #2cadad;
-}
-.inputButton:hover {
-  top: 2px;
-  -webkit-box-shadow: 0 3px 0 #2cadad;
-  -moz-box-shadow: 0 3px 0 #2cadad;
-  box-shadow: 0 3px 0 #2cadad;
-}
-.inputButton:active {
-  top: 5px;
-  box-shadow: none;
-}
-.inputButton:focus {
-  outline: none;
-}
 </style>
