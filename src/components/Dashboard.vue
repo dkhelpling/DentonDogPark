@@ -1,22 +1,13 @@
 <template>
   <v-row align="center" justify="center">
     <div id="dashboard">
-      <!-- <h5>name: {{ userProfile.name }}</h5>
-      <p>pet: {{ userProfile.pet }}</p>
-      <p>At dogpark: {{ userProfile.attendence }}</p>-->
-
       <p>Pets at the Park:</p>
 
       <div v-if="pets.length">
         <v-container fluid>
           <v-row>
             <v-col cols="12">
-              <v-row
-                :align="center"
-                :justify="center"
-                class="grey lighten-5"
-                style="height: 100px;"
-              >
+              <v-row class="grey lighten-5" style="height: 100px;">
                 <v-card v-for="pet in pets" :key="pet.id" class="ma-3 pa-6" outlined tile>{{pet}}</v-card>
               </v-row>
             </v-col>
@@ -44,7 +35,7 @@ export default {
   },
   components: { Checkin },
   computed: {
-    ...mapState(["userProfile", "pets"])
+    ...mapState(["userAccount", "pets"])
   }
 };
 </script>

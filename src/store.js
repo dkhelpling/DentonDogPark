@@ -8,9 +8,9 @@ Vue.use(Vuex);
 fb.auth.onAuthStateChanged(user => {
   if (user) {
     store.commit("setCurrentUser", user);
-    store.dispatch("fetchUserProfile");
+    store.dispatch("fetchUserAccount");
     fb.usersCollection.doc(user.uid).onSnapshot(doc => {
-      store.commit("setUserProfile", doc.data());
+      store.commit("setUserAccount", doc.data());
     });
 
     fb.usersCollection.orderBy("pet").onSnapshot(querySnapshot => {
@@ -30,7 +30,7 @@ export const store = new Vuex.Store({
   //Added properties to the state file
   state: {
     currentUser: null,
-    userProfile: {},
+    userAccount: {},
     pets: []
   },
   //Created mutations to update user in state object
@@ -38,8 +38,8 @@ export const store = new Vuex.Store({
     setCurrentUser(state, val) {
       state.currentUser = val;
     },
-    setUserProfile(state, val) {
-      state.userProfile = val;
+    setUserAccount(state, val) {
+      state.userAccount = val;
     },
     setPets(state, val) {
       state.pets = val;
@@ -49,20 +49,20 @@ export const store = new Vuex.Store({
   actions: {
     clearData({ commit }) {
       commit("setCurrentUser", null);
-      commit("setUserProfile", {});
+      commit("setUserAccount", {});
     },
-    fetchUserProfile({ commit, state }) {
+    fetchUserAccount({ commit, state }) {
       fb.usersCollection
         .doc(state.currentUser.uid)
         .get()
         .then(res => {
-          commit("setUserProfile", res.data());
+          commit("setUserAccount", res.data());
         })
         .catch(err => {
           console.log(err);
         });
     },
-    updateProfile({ commit, state }, data) {
+    updateProfile({ state }, data) {
       let attendence = data.attendence;
       fb.usersCollection
         .doc(state.currentUser.uid)
@@ -74,7 +74,7 @@ export const store = new Vuex.Store({
           console.log(error.message);
         });
     },
-    updateProfile2({ commit, state }, data) {
+    updateProfile2({ state }, data) {
       let attendence = data.attendence;
       fb.usersCollection
         .doc(state.currentUser.uid)
@@ -84,6 +84,20 @@ export const store = new Vuex.Store({
         })
         .catch(function(error) {
           console.log(error.message);
+        });
+    },
+    updateAccount({ state }, data) {
+      let name = data.name;
+      let pet = data.pet;
+
+      fb.usersCollection
+        .doc(state.currentUser.uid)
+        .update({ name, pet })
+        .then(function() {
+          // update name or pet
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   }

@@ -256,15 +256,6 @@
             </v-row>
           </v-container>
         </div>
-        <!--<div v-else>
-          <v-toolbar color="indigo" dark>
-            <v-toolbar-title>Create an Account</v-toolbar-title>
-            <div class="flex-grow-1"></div>
-          </v-toolbar>
-          <h1>Email Sent</h1>
-          <p>check your email for a link to reset your password</p>
-          <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>
-        </div>-->
         <div v-else>
           <div class="flex-grow-1"></div>
           <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>

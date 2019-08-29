@@ -67,7 +67,7 @@
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-btn text class="hidden-sm-and-down" to="/Dashboard">Home</v-btn>
-      <v-btn text class="hidden-sm-and-down">Profile</v-btn>
+      <v-btn text class="hidden-sm-and-down" to="/Profile">Profile</v-btn>
       <div v-if="!currentUser">
         <v-btn text class="hidden-sm-and-down" to="/Login">Login</v-btn>
         <v-btn color="red darken-3" class="hidden-sm-and-down">Sign Up</v-btn>
