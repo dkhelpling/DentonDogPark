@@ -12,13 +12,16 @@ fb.auth.onAuthStateChanged(user => {
     fb.usersCollection.doc(user.uid).onSnapshot(doc => {
       store.commit("setUserAccount", doc.data());
     });
-
+    //handles list of pets in park
     fb.usersCollection.orderBy("pet").onSnapshot(querySnapshot => {
       let petArray = [];
       querySnapshot.forEach(doc => {
         let pet = doc.data();
         if (pet.attendence === true) {
-          petArray.push(pet.pet);
+          let petObj = {};
+          petObj["petName"] = pet.pet;
+          petObj["img"] = pet.imageURL;
+          petArray.push(petObj);
         }
       });
       store.commit("setPets", petArray);
@@ -31,7 +34,8 @@ export const store = new Vuex.Store({
   state: {
     currentUser: null,
     userAccount: {},
-    pets: []
+    pets: [],
+    userAvatar: null
   },
   //Created mutations to update user in state object
   mutations: {
@@ -43,6 +47,9 @@ export const store = new Vuex.Store({
     },
     setPets(state, val) {
       state.pets = val;
+    },
+    setUserAvatar(state, val) {
+      state.userAvatar = val;
     }
   },
   //Setup actions to fetch the user profile
@@ -95,6 +102,19 @@ export const store = new Vuex.Store({
         .update({ name, pet })
         .then(function() {
           // update name or pet
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    updateProfileAvatar({ state }, data) {
+      let imageURL = data.imageURL;
+
+      fb.usersCollection
+        .doc(state.currentUser.uid)
+        .update({ imageURL })
+        .then(function() {
+          // update profile image URL
         })
         .catch(err => {
           console.log(err);

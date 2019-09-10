@@ -1,6 +1,6 @@
 <template>
   <div class="col1">
-    <div class="flex-grow-1" v-if="atPark === false">
+    <div class="flex-grow-1" v-if="userAccount.attendence === false">
       <v-btn color="indigo" dark @click="updateProfile">Checkin</v-btn>
     </div>
     <div v-else>
@@ -15,13 +15,10 @@ import { mapState } from "vuex";
 
 export default {
   data() {
-    return {
-      attendence: "",
-      atPark: false
-    };
+    return {};
   },
   computed: {
-    ...mapState(["userProfile"])
+    ...mapState(["userProfile", "userAccount"])
   },
   methods: {
     updateProfile() {

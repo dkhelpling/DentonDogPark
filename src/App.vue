@@ -7,9 +7,9 @@
     <v-app-bar app v-else color="indigo" dark>
       <v-toolbar-title>Denton Dog Park</v-toolbar-title>
     </v-app-bar>
-    <v-content>
+    <v-container pt-12 mt-12>
       <router-view></router-view>
-    </v-content>
+    </v-container>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
     </v-footer>
