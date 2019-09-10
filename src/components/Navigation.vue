@@ -8,18 +8,14 @@
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-btn text class="hidden-sm-and-down" to="/Dashboard">Home</v-btn>
       <v-btn text class="hidden-sm-and-down" to="/Profile">Profile</v-btn>
-      <div v-if="!currentUser">
-        <v-btn text class="hidden-sm-and-down" to="/Login">Login</v-btn>
-        <v-btn color="red darken-3" class="hidden-sm-and-down">Sign Up</v-btn>
-      </div>
-      <div v-else>
+      <div v-if="currentUser">
         <v-btn color="red darken-3" class="hidden-sm-and-down" @click="logout">Logout</v-btn>
       </div>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
-        <v-list-item @click>
+        <v-list-item to="/Dashboard">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -27,14 +23,24 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click>
+        <v-list-item to="/Profile">
           <v-list-item-action>
-            <v-icon>mdi-contact_mail</v-icon>
+            <v-icon>mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
+            <v-list-item-title>Profile</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <div v-if="currentUser">
+          <v-list-item @click="logout">
+            <v-list-item-action>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
   </v-app>
@@ -46,12 +52,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      drawer: false,
-      menuItems: [
-        { title: "Home", path: "/home", icon: "home" },
-        { title: "Sign Up", path: "/signup", icon: "face" },
-        { title: "Sign In", path: "/signin", icon: "lock_open" }
-      ]
+      drawer: false
     };
   },
   computed: {
