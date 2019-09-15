@@ -9,6 +9,7 @@
                 <v-toolbar color="indigo" dark>
                   <v-toolbar-title>Login</v-toolbar-title>
                   <div class="flex-grow-1"></div>
+                  <v-btn color="red darken-2" class="white--text" @click="toggleForm">Sign up</v-btn>
                 </v-toolbar>
                 <v-card-text>
                   <v-form>
@@ -33,8 +34,6 @@
                 </v-card-text>
                 <v-card-actions>
                   <div class="flex-grow-2"></div>
-                  <v-btn color="red darken-2" class="white--text" @click="toggleForm">Sign up</v-btn>
-                  <div class="flex-grow-1"></div>
                   <v-btn color="indigo" dark @click="togglePasswordReset">Forgot Password?</v-btn>
                   <div class="flex-grow-1"></div>
                   <v-btn color="indigo" dark @click="login">Login</v-btn>
@@ -88,13 +87,14 @@
                   </v-form>
                 </v-card-text>
                 <v-card-actions>
-                  <div class="flex-grow-2"></div>
-                  <v-btn color="red darken-2" class="white--text" @click="signup">Sign up</v-btn>
-
                   <div class="flex-grow-1"></div>
-                  <v-btn color="indigo" dark @click="toggleForm">Back to Login</v-btn>
+                  <v-btn color="red darken-2" class="white--text" @click="signup">Sign up</v-btn>
                 </v-card-actions>
               </v-card>
+              <br />
+              <div align="center" justify="center">
+                <v-btn color="indigo" dark @click="toggleForm">Back to Login</v-btn>
+              </div>
             </v-col>
           </v-row>
         </v-container>
@@ -122,12 +122,14 @@
                     </v-form>
                   </v-card-text>
                   <v-card-actions>
-                    <div class="flex-grow-2"></div>
-                    <v-btn color="indigo" dark @click="resetPassword">Submit</v-btn>
                     <div class="flex-grow-1"></div>
-                    <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>
+                    <v-btn color="red darken-2" class="white--text" @click="resetPassword">Submit</v-btn>
                   </v-card-actions>
                 </v-card>
+                <br />
+                <div align="center" justify="center">
+                  <v-btn color="indigo" dark @click="togglePasswordReset">Back to Login</v-btn>
+                </div>
               </v-col>
             </v-row>
           </v-container>

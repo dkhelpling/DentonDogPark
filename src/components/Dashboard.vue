@@ -71,7 +71,6 @@ export default {
     showProfile(data) {
       this.showDashboard = !this.showDashboard;
       this.petInfo = data;
-      console.log(data);
     },
     toggleDashboard() {
       this.showDashboard = !this.showDashboard;

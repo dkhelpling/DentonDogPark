@@ -3,11 +3,7 @@
     <v-app id="inspire">
       <div v-if="showProfileForm">
         <v-card class="mx-auto" max-width="400">
-          <v-img
-            class="white--text"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
+          <v-img class="white--text" height="200px" :src="userAccount.imageURL">
             <v-card-title class="align-end fill-height">{{userAccount.pet}}</v-card-title>
           </v-img>
 
@@ -54,12 +50,14 @@
                     </v-form>
                   </v-card-text>
                   <v-card-actions>
-                    <div class="flex-grow-2"></div>
-                    <v-btn color="red darken-2" class="white--text" @click="updateAccount">Update</v-btn>
                     <div class="flex-grow-1"></div>
-                    <v-btn color="indigo" dark @click="toggleForm">Back to Profile</v-btn>
+                    <v-btn color="red darken-2" class="white--text" @click="updateAccount">Update</v-btn>
                   </v-card-actions>
                 </v-card>
+                <br />
+                <div align="center" justify="center">
+                  <v-btn color="indigo" dark @click="toggleForm">Back to Profile</v-btn>
+                </div>
               </v-col>
             </v-row>
           </v-container>
@@ -76,7 +74,6 @@
                 <v-card class="elevation-12">
                   <v-toolbar color="indigo" dark>
                     <v-toolbar-title>Change Profile Picture</v-toolbar-title>
-                    <div class="flex-grow-1"></div>
                   </v-toolbar>
                   <v-card-text>
                     <v-file-input
@@ -85,20 +82,24 @@
                       accept="image/*"
                       @change="onFileChange"
                     ></v-file-input>
-                    <v-btn color="red darken-2" class="white--text" @click="onUpload">Upload</v-btn>
-                    <img :src="this.imageURL" alt width="100px" />
+                    <v-card-actions>
+                      <div class="flex-grow-2"></div>
+                      <v-btn color="red darken-2" class="white--text" @click="onUpload">Upload</v-btn>
+                      <img :src="this.imageURL" alt width="100px" />
+                      <div class="flex-grow-1"></div>
+                      <v-btn
+                        color="red darken-2"
+                        class="white--text"
+                        @click="updateProfileAvatar"
+                      >Set Profile Picture</v-btn>
+                    </v-card-actions>
                   </v-card-text>
-                  <v-card-actions>
-                    <div class="flex-grow-2"></div>
-                    <v-btn
-                      color="red darken-2"
-                      class="white--text"
-                      @click="updateProfileAvatar"
-                    >Set Profile Picture</v-btn>
-                    <div class="flex-grow-1"></div>
-                    <v-btn color="indigo" dark @click="toggleAvatarForm">Back to Profile</v-btn>
-                  </v-card-actions>
+                  <v-card-actions></v-card-actions>
                 </v-card>
+                <div align="center" justify="center">
+                  <br />
+                  <v-btn color="indigo" dark @click="toggleAvatarForm">Back to Profile</v-btn>
+                </div>
               </v-col>
             </v-row>
           </v-container>

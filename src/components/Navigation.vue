@@ -3,6 +3,7 @@
     <v-app-bar app color="indigo" dark>
       <v-app-bar-nav-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
+
       <v-toolbar-title>Denton Dog Park</v-toolbar-title>
 
       <v-spacer class="hidden-sm-and-down"></v-spacer>
