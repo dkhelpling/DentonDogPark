@@ -21,6 +21,7 @@ fb.auth.onAuthStateChanged(user => {
           let petObj = {};
           petObj["petName"] = pet.pet;
           petObj["img"] = pet.imageURL;
+          petObj["ownerName"] = pet.name;
           petArray.push(petObj);
         }
       });
