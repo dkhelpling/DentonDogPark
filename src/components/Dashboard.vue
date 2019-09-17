@@ -2,25 +2,22 @@
 <template>
   <div>
     <div v-if="showDashboard">
-      <v-row align="center" justify="center">
+      <!-- <v-row align="center" justify="center">
         <p>Pets at the Park:</p>
         <div class="team">
           <v-card-actions class="justify-center">
             <Checkin></Checkin>
           </v-card-actions>
           <v-container fluid>
-            <v-layout class="ma-3 pa-6">
+            <v-layout class="ma-6 pa-2">
               <v-row>
                 <v-col cols="12">
-                  <v-row>
-                    <v-flex v-for="pet in pets" :key="pet.id" class="ma-3 pa-2">
-                      <v-responsive class="pt-2">
-                        <v-avatar size="100" class="grey lighten-2" @click="showProfile(pet)">
-                          <img :src="pet.img" />
-                        </v-avatar>
-                        <h1>{{pet.petName}}</h1>
-                      </v-responsive>
-                      <v-card-text class="justify-center"></v-card-text>
+                  <v-row :align="alignment" :justify="justify">
+                    <v-flex v-for="pet in pets" :key="pet.id" class="ma-1 pa-3">
+                      <v-avatar size="50" class="grey lighten-2" @click="showProfile(pet)">
+                        <img :src="pet.img" />
+                      </v-avatar>
+                      <p>{{pet.petName}}</p>
                     </v-flex>
                   </v-row>
                 </v-col>
@@ -28,7 +25,31 @@
             </v-layout>
           </v-container>
         </div>
-      </v-row>
+      </v-row>-->
+      <v-layout row>
+        <v-flex xs14 sm4 offset-sm3>
+          <v-toolbar flat>
+            <v-toolbar-title>Pets in Park:</v-toolbar-title>
+            <div class="flex-grow-1"></div>
+            <Checkin></Checkin>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-container fluid grid-list-sm>
+            <v-layout row wrap>
+              <v-flex v-for="pet in pets" :key="pet.id" xs4>
+                <v-avatar size="120" class="grey lighten-2" @click="showProfile(pet)">
+                  <img :src="pet.img" />
+                </v-avatar>
+                <br />
+
+                <h3 align="center">{{pet.petName}}</h3>
+                <br />
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <v-footer class="mt-5"></v-footer>
+        </v-flex>
+      </v-layout>
     </div>
     <div v-if="!showDashboard">
       <v-card class="mx-auto" max-width="400">

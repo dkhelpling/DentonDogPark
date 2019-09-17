@@ -85,7 +85,7 @@
                     <v-card-actions>
                       <div class="flex-grow-2"></div>
                       <v-btn color="red darken-2" class="white--text" @click="onUpload">Upload</v-btn>
-                      <img :src="this.imageURL" alt width="100px" />
+
                       <div class="flex-grow-1"></div>
                       <v-btn
                         color="red darken-2"
@@ -94,8 +94,11 @@
                       >Set Profile Picture</v-btn>
                     </v-card-actions>
                   </v-card-text>
-                  <v-card-actions></v-card-actions>
+                  <div align="center" justify="center">
+                    <img :src="this.imageURL" alt width="100px" />
+                  </div>
                 </v-card>
+
                 <div align="center" justify="center">
                   <br />
                   <v-btn color="indigo" dark @click="toggleAvatarForm">Back to Profile</v-btn>
