@@ -82,21 +82,29 @@
                       accept="image/*"
                       @change="onFileChange"
                     ></v-file-input>
-                    <v-card-actions>
-                      <div class="flex-grow-2"></div>
-                      <v-btn color="red darken-2" class="white--text" @click="onUpload">Upload</v-btn>
 
-                      <div class="flex-grow-1"></div>
+                    <br />
+                    <div align="center" justify="center">
+                      <div v-if="loading">
+                        <pulse-loader id="loader" :color="color"></pulse-loader>
+                      </div>
+                      <div v-else>
+                        <img
+                          :src="this.imageURL"
+                          alt="https://i.imgur.com/Fioc3zS.jpg"
+                          width="150px"
+                        />
+                      </div>
+                    </div>
+                    <br />
+                    <div align="center" justify="center">
                       <v-btn
                         color="red darken-2"
                         class="white--text"
                         @click="updateProfileAvatar"
                       >Set Profile Picture</v-btn>
-                    </v-card-actions>
+                    </div>
                   </v-card-text>
-                  <div align="center" justify="center">
-                    <img :src="this.imageURL" alt width="100px" />
-                  </div>
                 </v-card>
 
                 <div align="center" justify="center">
@@ -118,8 +126,11 @@
 
 <script>
 import { mapState } from "vuex";
+import PictureInput from "vue-picture-input";
 
 import { fb, db } from "../firebaseConfig.js";
+import FadeLoader from "vue-spinner/src/FadeLoader.vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   data() {
@@ -129,12 +140,18 @@ export default {
       showSuccess: false,
       name: "",
       pet: "",
-      imageURL: null,
-      file: null
+      imageURL: "https://via.placeholder.com/150",
+      file: null,
+      color: "#2f3f9c",
+      loading: false
     };
   },
   computed: {
     ...mapState(["userAccount"])
+  },
+  components: {
+    FadeLoader,
+    PulseLoader
   },
   methods: {
     toggleForm() {
@@ -180,8 +197,6 @@ export default {
         this.imageUrl = reader.result;
       };
       reader.readAsDataURL(this.file);
-    },
-    onUpload() {
       console.log(this.file);
       var storageRef = fb
         .storage()
@@ -208,4 +223,7 @@ export default {
 </script>
 
 <style>
+#loader {
+  color: red;
+}
 </style>

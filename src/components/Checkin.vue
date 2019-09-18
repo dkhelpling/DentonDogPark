@@ -26,7 +26,12 @@ export default {
         attendence: this.attendence !== true ? true : false
       });
       this.atPark = true;
-      setTimeout(() => {}, 2000);
+      setTimeout(() => {
+        this.atPark = false;
+        this.$store.dispatch("updateProfile2", {
+          attendence: this.attendence !== false ? false : true
+        });
+      }, 3600000);
     },
     updateProfile2() {
       this.$store.dispatch("updateProfile2", {

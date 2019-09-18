@@ -3,9 +3,9 @@
     <v-app-bar app color="indigo" dark>
       <v-app-bar-nav-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer class="hidden-md-and-up"></v-spacer>
-
-      <v-toolbar-title>Denton Dog Park</v-toolbar-title>
-
+      <router-link to="/Dashboard">
+        <v-toolbar-title id="homepageTitle">Denton Dog Park</v-toolbar-title>
+      </router-link>
       <v-spacer class="hidden-sm-and-down"></v-spacer>
       <v-btn text class="hidden-sm-and-down" to="/Dashboard">Home</v-btn>
       <v-btn text class="hidden-sm-and-down" to="/Profile">Profile</v-btn>
@@ -80,4 +80,10 @@ export default {
 </script>
     
 <style>
+a {
+  text-decoration: none;
+}
+#homepageTitle {
+  color: white;
+}
 </style>
