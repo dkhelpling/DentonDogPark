@@ -19,6 +19,7 @@ import router from "./router/index.js";
 import { store } from "./store";
 const fb = require("./firebaseConfig.js");
 import vuetify from "./plugins/vuetify.js";
+import VueImgOrientationChanger from "vue-img-orientation-changer";
 
 Vue.config.productionTip = false;
 
@@ -30,6 +31,7 @@ fb.auth.onAuthStateChanged(user => {
       router,
       vuetify,
       store,
+      VueImgOrientationChanger,
       render: h => h(App)
     }).$mount("#app");
   }

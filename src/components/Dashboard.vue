@@ -1,31 +1,7 @@
 
 <template>
   <div>
-    <div v-if="showDashboard">
-      <!-- <v-row align="center" justify="center">
-        <p>Pets at the Park:</p>
-        <div class="team">
-          <v-card-actions class="justify-center">
-            <Checkin></Checkin>
-          </v-card-actions>
-          <v-container fluid>
-            <v-layout class="ma-6 pa-2">
-              <v-row>
-                <v-col cols="12">
-                  <v-row :align="alignment" :justify="justify">
-                    <v-flex v-for="pet in pets" :key="pet.id" class="ma-1 pa-3">
-                      <v-avatar size="50" class="grey lighten-2" @click="showProfile(pet)">
-                        <img :src="pet.img" />
-                      </v-avatar>
-                      <p>{{pet.petName}}</p>
-                    </v-flex>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-layout>
-          </v-container>
-        </div>
-      </v-row>-->
+    <div>
       <v-layout row>
         <v-flex xs14 sm4 offset-sm3>
           <v-toolbar flat>
@@ -37,9 +13,10 @@
           <v-container fluid grid-list-sm>
             <v-layout row wrap>
               <v-flex v-for="pet in pets" :key="pet.id" xs4>
-                <v-avatar size="120" class="grey lighten-2" @click="showProfile(pet)">
+                <v-avatar size="120" class="grey lighten-2" @click="showPopup(pet)">
                   <img :src="pet.img" />
                 </v-avatar>
+
                 <br />
 
                 <h3 align="center">{{pet.petName}}</h3>
@@ -52,22 +29,30 @@
       </v-layout>
     </div>
     <div v-if="!showDashboard">
-      <v-card class="mx-auto" max-width="400">
-        <v-img class="white--text" height="200px" :src="petInfo.img">
-          <v-card-title class="align-end fill-height">{{petInfo.petName}}</v-card-title>
-        </v-img>
-
-        <v-card-text>
-          <span class="text--primary">
-            <span>Owner: {{petInfo.ownerName}}</span>
+      <v-dialog width="500" v-model="dialog">
+        <v-card color="indigo">
+          <div align="right" justify="right">
+            <v-icon x-large @click="closePopup">mdi-close</v-icon>
+          </div>
+          <v-card class="mx-auto" max-width="400">
             <br />
-          </span>
-        </v-card-text>
-      </v-card>
-      <br />
-      <div align="center" justify="center">
-        <v-btn color="indigo" dark @click="toggleDashboard">Back to Dashboard</v-btn>
-      </div>
+            <v-img class="white--text" max-height="200" contain :src="petInfo.img"></v-img>
+            <v-card-text>
+              <span class="text--primary">
+                <span>Pet Name: {{petInfo.petName}}</span>
+                <br />
+                <span>Owner: {{petInfo.ownerName}}</span>
+                <br />
+              </span>
+            </v-card-text>
+          </v-card>
+          <br />
+        </v-card>
+        <!-- <br />
+        <div class="white--text" align="center" justify="center">Click outside box to close!</div>
+        <div prepend-icon="mdi-close"></div>
+        <br />-->
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -81,7 +66,8 @@ export default {
     return {
       test: null,
       petInfo: null,
-      showDashboard: true
+      showDashboard: true,
+      dialog: false
     };
   },
   components: { Checkin },
@@ -95,6 +81,14 @@ export default {
     },
     toggleDashboard() {
       this.showDashboard = !this.showDashboard;
+    },
+    showPopup(data) {
+      this.dialog = !this.dialog;
+      this.petInfo = data;
+      this.showDashboard = !this.dialog;
+    },
+    closePopup() {
+      this.dialog = !this.dialog;
     }
   }
 };

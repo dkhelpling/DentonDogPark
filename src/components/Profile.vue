@@ -90,6 +90,7 @@
                       </div>
                       <div v-else>
                         <img
+                          v-img-orientation-changer
                           :src="this.imageURL"
                           alt="https://i.imgur.com/Fioc3zS.jpg"
                           width="150px"
@@ -127,7 +128,7 @@
 <script>
 import { mapState } from "vuex";
 import PictureInput from "vue-picture-input";
-
+import VueImgOrientationChanger from "vue-img-orientation-changer";
 import { fb, db } from "../firebaseConfig.js";
 import FadeLoader from "vue-spinner/src/FadeLoader.vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -151,7 +152,8 @@ export default {
   },
   components: {
     FadeLoader,
-    PulseLoader
+    PulseLoader,
+    VueImgOrientationChanger
   },
   methods: {
     toggleForm() {
@@ -225,5 +227,8 @@ export default {
 <style>
 #loader {
   color: red;
+}
+img {
+  image-orientation: from-image;
 }
 </style>
