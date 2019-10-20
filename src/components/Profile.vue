@@ -3,9 +3,8 @@
     <v-app id="inspire">
       <div v-if="showProfileForm">
         <v-card class="mx-auto" max-width="400">
-          <v-img class="white--text" height="200px" :src="userAccount.imageURL">
-            <v-card-title class="align-end fill-height">{{userAccount.pet}}</v-card-title>
-          </v-img>
+          <v-card-title class="align-end fill-height">{{userAccount.pet}}</v-card-title>
+          <v-img class="white--text" :src="userAccount.imageURL"></v-img>
 
           <v-card-text>
             <span class="text--primary">
@@ -76,27 +75,34 @@
                     <v-toolbar-title>Change Profile Picture</v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
-                    <v-file-input
-                      v-model="file"
-                      label="Select Image File..."
-                      accept="image/*"
+                    <picture-input
+                      ref="pictureInput"
                       @change="onFileChange"
-                    ></v-file-input>
+                      width="600"
+                      height="600"
+                      margin="16"
+                      accept="image/jpeg, image/png"
+                      size="10"
+                      :removable="true"
+                      :customStrings="{
+        upload: '<h1>Bummer!</h1>',
+        drag: 'Select an image of your dog!'
+      }"
+                    ></picture-input>
 
                     <br />
-                    <div align="center" justify="center">
+                    <!-- <div align="center" justify="center">
                       <div v-if="loading">
                         <pulse-loader id="loader" :color="color"></pulse-loader>
                       </div>
                       <div v-else>
                         <img
-                          v-img-orientation-changer
                           :src="this.imageURL"
                           alt="https://i.imgur.com/Fioc3zS.jpg"
                           width="150px"
                         />
                       </div>
-                    </div>
+                    </div>-->
                     <br />
                     <div align="center" justify="center">
                       <v-btn
@@ -128,7 +134,6 @@
 <script>
 import { mapState } from "vuex";
 import PictureInput from "vue-picture-input";
-import VueImgOrientationChanger from "vue-img-orientation-changer";
 import { fb, db } from "../firebaseConfig.js";
 import FadeLoader from "vue-spinner/src/FadeLoader.vue";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -153,7 +158,7 @@ export default {
   components: {
     FadeLoader,
     PulseLoader,
-    VueImgOrientationChanger
+    PictureInput
   },
   methods: {
     toggleForm() {
@@ -193,17 +198,14 @@ export default {
         this.showAvatarForm = !this.showAvatarForm;
       }, 2000);
     },
-    onFileChange() {
-      let reader = new FileReader();
-      reader.onload = () => {
-        this.imageUrl = reader.result;
-      };
-      reader.readAsDataURL(this.file);
-      console.log(this.file);
+    onFileChange(image) {
+      console.log(this.$refs.pictureInput.file);
+      var file = this.$refs.pictureInput.file;
       var storageRef = fb
         .storage()
-        .ref("images/" + Math.random() + "_" + this.file.name);
-      let uploadTask = storageRef.put(this.file);
+        .ref("images/" + Math.random() + "_" + file.name);
+
+      let uploadTask = storageRef.put(file);
       uploadTask.on(
         "state_changed",
         snapshot => {},
@@ -213,7 +215,6 @@ export default {
         () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-
           uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
             this.imageURL = downloadURL;
           });
