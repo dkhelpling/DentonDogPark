@@ -4,7 +4,7 @@ import "firebase/storage";
 
 // firebase init goes here
 const config = {
-  apiKey: "AIzaSyDz9ooSYXtWJCG3zhbeGqNksZ971xK6IjU",
+  apiKey: "****",
   authDomain: "dentondogpark.firebaseapp.com",
   databaseURL: "https://dentondogpark.firebaseio.com",
   projectId: "dentondogpark",
